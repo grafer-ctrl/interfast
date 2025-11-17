@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - INTERFAST</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Articles and insights on Intermittent Fasting - INTERFAST">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        /* INTERFAST CSS - All in One */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 20px 80px 20px;
+        }
+
+        /* Header */
+        .interfast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .interfast-back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .interfast-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Hamburger Menu */
+        .interfast-menu-container {
+            position: relative;
+        }
+
+        .interfast-hamburger-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .interfast-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .interfast-dropdown-menu.show {
+            display: block;
+        }
+
+        .interfast-lang-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .interfast-lang-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .interfast-lang-option.active {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .interfast-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .interfast-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .interfast-page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Article Card Styling */
+        .interfast-article-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .interfast-article-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .interfast-article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .interfast-article-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem; /* For emoji fallback */
+            background-color: #f0f2f5;
+        }
+        
+        .interfast-article-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .interfast-article-category {
+            display: inline-block;
+            background-color: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+
+        .interfast-article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .interfast-article-desc {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .interfast-read-more {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+            align-self: flex-start;
+        }
+
+        .interfast-read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Bottom Navigation */
+        .interfast-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+
+        .interfast-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .interfast-nav-item.active {
+            color: #667eea;
+        }
+
+        .interfast-nav-item:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .interfast-nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .interfast-nav-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="interfast-container">
+        <!-- Header dengan Back Button & Hamburger Menu -->
+        <div class="interfast-header">
+            <a href="index.html" class="interfast-back-btn">← Back</a>
+            <div class="interfast-logo">
+                <h1>⚡ INTERFAST</h1>
+            </div>
+            <div class="interfast-menu-container">
+                <button class="interfast-hamburger-btn" onclick="interfastToggleMenu()">☰</button>
+                <div class="interfast-dropdown-menu" id="interfastDropdownMenu">
+                    <div class="interfast-lang-option active" data-lang="en">
+                        <span>🇺🇸 English</span>
+                    </div>
+                    <div class="interfast-lang-option" data-lang="id">
+                        <span>🇮🇩 Indonesia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Article List -->
+        <div class="interfast-section">
+            <h1 class="interfast-page-title" id="interfastPageTitle">Articles & Insights</h1>
+            
+            <div class="interfast-article-grid">
+                <!-- Article Card 1 -->
+                <a href="#" class="interfast-article-card">
+                    <div class="interfast-article-image">💧</div>
+                    <div class="interfast-article-content">
+                        <span class="interfast-article-category" id="article1Category">BEGINNER</span>
+                        <h3 class="interfast-article-title" id="article1Title">What Can You Drink While Fasting?</h3>
+                        <p class="interfast-article-desc" id="article1Desc">Staying hydrated is key. Discover the best calorie-free drinks that won't break your fast and might even enhance its benefits.</p>
+                        <span class="interfast-read-more" id="article1ReadMore">Read More →</span>
+                    </div>
+                </a>
+
+                <!-- Article Card 2 -->
+                <a href="#" class="interfast-article-card">
+                    <div class="interfast-article-image">🔬</div>
+                    <div class="interfast-article-content">
+                        <span class="interfast-article-category" id="article2Category">SCIENCE</span>
+                        <h3 class="interfast-article-title" id="article2Title">The Science of Autophagy: Your Body's Cleanup Crew</h3>
+                        <p class="interfast-article-desc" id="article2Desc">Learn how fasting activates your body's natural cellular recycling process, a key benefit for longevity and health.</p>
+                        <span class="interfast-read-more" id="article2ReadMore">Read More →</span>
+                    </div>
+                </a>
+
+                <!-- Article Card 3 -->
+                <a href="#" class="interfast-article-card">
+                    <div class="interfast-article-image">⚠️</div>
+                    <div class="interfast-article-content">
+                        <span class="interfast-article-category" id="article3Category">TIPS</span>
+                        <h3 class="interfast-article-title" id="article3Title">5 Common Intermittent Fasting Mistakes to Avoid</h3>
+                        <p class="interfast-article-desc" id="article3Desc">Set yourself up for success by avoiding these common pitfalls that can derail your progress and motivation.</p>
+                        <span class="interfast-read-more" id="article3ReadMore">Read More →</span>
+                    </div>
+                </a>
+                
+                <!-- Article Card 4 -->
+                <a href="#" class="interfast-article-card">
+                    <div class="interfast-article-image">🏋️</div>
+                    <div class="interfast-article-content">
+                        <span class="interfast-article-category" id="article4Category">LIFESTYLE</span>
+                        <h3 class="interfast-article-title" id="article4Title">Fasting and Exercise: The Ultimate Guide</h3>
+                        <p class="interfast-article-desc" id="article4Desc">Should you work out fasted? Find out how to time your exercise to maximize fat burning and muscle growth.</p>
+                        <span class="interfast-read-more" id="article4ReadMore">Read More →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <nav class="interfast-bottom-nav">
+        <a href="index.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">🏠</div>
+            <div class="interfast-nav-label" data-en="Home" data-id="Beranda">Home</div>
+        </a>
+        <a href="guide.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📚</div>
+            <div class="interfast-nav-label" data-en="Guide" data-id="Panduan">Guide</div>
+        </a>
+        <a href="artikel.html" class="interfast-nav-item active">
+            <div class="interfast-nav-icon">📖</div>
+            <div class="interfast-nav-label" data-en="Articles" data-id="Artikel">Articles</div>
+        </a>
+        <a href="catatan.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📝</div>
+            <div class="interfast-nav-label" data-en="History" data-id="Riwayat">History</div>
+        </a>
+    </nav>
+
+    <script>
+        // INTERFAST JavaScript - Article Page
+        const interfastTranslations = {
+            en: {
+                pageTitle: "Articles & Insights",
+                article1Category: "BEGINNER",
+                article1Title: "What Can You Drink While Fasting?",
+                article1Desc: "Staying hydrated is key. Discover the best calorie-free drinks that won't break your fast and might even enhance its benefits.",
+                article1ReadMore: "Read More →",
+                article2Category: "SCIENCE",
+                article2Title: "The Science of Autophagy: Your Body's Cleanup Crew",
+                article2Desc: "Learn how fasting activates your body's natural cellular recycling process, a key benefit for longevity and health.",
+                article2ReadMore: "Read More →",
+                article3Category: "TIPS",
+                article3Title: "5 Common Intermittent Fasting Mistakes to Avoid",
+                article3Desc: "Set yourself up for success by avoiding these common pitfalls that can derail your progress and motivation.",
+                article3ReadMore: "Read More →",
+                article4Category: "LIFESTYLE",
+                article4Title: "Fasting and Exercise: The Ultimate Guide",
+                article4Desc: "Should you work out fasted? Find out how to time your exercise to maximize fat burning and muscle growth.",
+                article4ReadMore: "Read More →",
+            },
+            id: {
+                pageTitle: "Artikel & Wawasan",
+                article1Category: "PEMULA",
+                article1Title: "Apa yang Boleh Diminum Saat Puasa?",
+                article1Desc: "Tetap terhidrasi adalah kunci. Temukan minuman bebas kalori terbaik yang tidak akan membatalkan puasa Anda dan bahkan dapat meningkatkan manfaatnya.",
+                article1ReadMore: "Baca Selengkapnya →",
+                article2Category: "SAINS",
+                article2Title: "Sains Autofagi: Tim Pembersih Tubuh Anda",
+                article2Desc: "Pelajari bagaimana puasa mengaktifkan proses daur ulang sel alami tubuh Anda, manfaat utama untuk umur panjang dan kesehatan.",
+                article2ReadMore: "Baca Selengkapnya →",
+                article3Category: "TIPS",
+                article3Title: "5 Kesalahan Umum Puasa Intermiten yang Harus Dihindari",
+                article3Desc: "Persiapkan diri Anda untuk sukses dengan menghindari kesalahan umum yang dapat menggagalkan kemajuan dan motivasi Anda.",
+                article3ReadMore: "Baca Selengkapnya →",
+                article4Category: "GAYA HIDUP",
+                article4Title: "Puasa dan Olahraga: Panduan Utama",
+                article4Desc: "Haruskah Anda berolahraga saat puasa? Cari tahu cara mengatur waktu olahraga untuk memaksimalkan pembakaran lemak dan pertumbuhan otot.",
+                article4ReadMore: "Baca Selengkapnya →",
+            }
+        };
+
+        let interfastCurrentLang = 'en';
+
+        // Menu Functions
+        function interfastToggleMenu() {
+            const menu = document.getElementById('interfastDropdownMenu');
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('interfastDropdownMenu');
+            const button = document.querySelector('.interfast-hamburger-btn');
+            
+            if (menu && button && !button.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Language Functions
+        function interfastChangeLanguage(lang) {
+            interfastCurrentLang = lang;
+            
+            document.querySelectorAll('.interfast-lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Update all translatable elements
+            Object.keys(interfastTranslations[lang]).forEach(key => {
+                const element = document.getElementById(key.charAt(0) === 'a' ? key : `interfast${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                if (element) {
+                    element.textContent = interfastTranslations[lang][key];
+                }
+            });
+
+            // Update bottom nav labels
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            document.getElementById('interfastDropdownMenu').classList.remove('show');
+        }
+
+        document.querySelectorAll('.interfast-lang-option').forEach(option => {
+            option.addEventListener('click', function() {
+                interfastChangeLanguage(this.dataset.lang);
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // No specific init functions needed for this static page
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => console.log('INTERFAST SW registered: ', registration))
+                .catch(registrationError => console.log('INTERFAST SW registration failed: ', registrationError));
+        }
+    </script>
+</body>
+</html>
