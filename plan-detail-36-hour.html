@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>36-Hour Plan - INTERFAST</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="36-Hour Intermittent Fasting Plan - The Monk Fast">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        /* INTERFAST CSS - All in One */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 20px 80px 20px;
+        }
+
+        /* Header */
+        .interfast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .interfast-back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .interfast-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Hamburger Menu */
+        .interfast-menu-container {
+            position: relative;
+        }
+
+        .interfast-hamburger-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .interfast-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .interfast-dropdown-menu.show {
+            display: block;
+        }
+
+        .interfast-lang-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .interfast-lang-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .interfast-lang-option.active {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .interfast-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .interfast-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Section 1: Header & Timer */
+        .interfast-plan-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .interfast-plan-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .interfast-plan-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .interfast-action-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-action-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .interfast-timer-preview {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .interfast-timer-text {
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        /* Section 2: Personal Simulation */
+        .interfast-user-setup {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .interfast-input-group {
+            margin-bottom: 20px;
+        }
+
+        .interfast-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .interfast-name-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .interfast-name-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .interfast-simulate-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-simulate-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .interfast-simulation-result {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            animation: interfastSlideDown 0.5s ease;
+        }
+
+        @keyframes interfastSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .interfast-result-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .interfast-result-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .interfast-timeline {
+            padding: 20px;
+        }
+
+        .interfast-timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .interfast-timeline-item.fasting {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .interfast-timeline-item.eating {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+
+        .interfast-timeline-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .interfast-timeline-content {
+            flex: 1;
+        }
+
+        .interfast-timeline-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .interfast-timeline-time {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .interfast-timeline-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .interfast-allowed {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            margin: 2px 4px 2px 0;
+            font-size: 0.8rem;
+        }
+
+        .interfast-not-allowed {
+            display: inline-block;
+            background: rgba(244, 67, 54, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            margin: 2px 4px 2px 0;
+            font-size: 0.8rem;
+        }
+
+        .interfast-progress-tracker {
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            margin: 0 20px 20px;
+            border-radius: 12px;
+        }
+
+        .interfast-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .interfast-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .interfast-progress-text {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .interfast-action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+
+        .interfast-secondary-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interfast-secondary-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        /* Section 3: Explanation & Visual */
+        .interfast-infographic {
+            display: flex;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .interfast-fasting-period {
+            flex: 36;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .interfast-eating-period {
+            flex: 1;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem; /* Smaller font for "MEAL" */
+        }
+
+        .interfast-time-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Section 4: Schedule Setup */
+        .interfast-time-picker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .interfast-time-input {
+            width: 80px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .interfast-time-separator {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .interfast-schedule-preview {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .interfast-schedule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .interfast-schedule-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .interfast-schedule-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Section 5: Tips */
+        .interfast-tips-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interfast-tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+        }
+
+        .interfast-tip-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .interfast-tip-content {
+            flex: 1;
+        }
+
+        .interfast-tip-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .interfast-tip-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Section 6: Food Inspiration */
+        .interfast-food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interfast-food-card {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-food-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .interfast-food-emoji {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .interfast-food-type {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .interfast-food-desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Bottom Navigation */
+        .interfast-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+
+        .interfast-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .interfast-nav-item.active {
+            color: #667eea;
+        }
+
+        .interfast-nav-item:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .interfast-nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .interfast-nav-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Section Titles */
+        .interfast-section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .interfast-container {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            
+            .interfast-section {
+                padding: 20px;
+            }
+            
+            .interfast-plan-title {
+                font-size: 2rem;
+            }
+            
+            .interfast-food-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .interfast-action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .interfast-plan-title {
+                font-size: 1.8rem;
+            }
+            
+            .interfast-time-input {
+                width: 70px;
+                padding: 10px;
+            }
+            
+            .interfast-food-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .interfast-timeline-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .interfast-nav-icon {
+                font-size: 1.2rem;
+            }
+
+            .interfast-nav-label {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="interfast-container">
+        <!-- Header dengan Back Button & Hamburger Menu -->
+        <div class="interfast-header">
+            <a href="index.html" class="interfast-back-btn">← Back</a>
+            <div class="interfast-logo">
+                <h1>⚡ INTERFAST</h1>
+            </div>
+            <div class="interfast-menu-container">
+                <button class="interfast-hamburger-btn" onclick="interfastToggleMenu()">☰</button>
+                <div class="interfast-dropdown-menu" id="interfastDropdownMenu">
+                    <div class="interfast-lang-option active" data-lang="en">
+                        <span>🇺🇸 English</span>
+                    </div>
+                    <div class="interfast-lang-option" data-lang="id">
+                        <span>🇮🇩 Indonesia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Header & Timer -->
+        <div class="interfast-section">
+            <div class="interfast-plan-header">
+                <h1 class="interfast-plan-title" id="interfastPlanTitle">36-Hour Fast</h1>
+                <p class="interfast-plan-subtitle" id="interfastPlanSubtitle">The Monk Fast</p>
+                <button class="interfast-action-btn" id="interfastMainActionBtn" onclick="interfastStartPlan()">
+                    Start This Plan
+                </button>
+                <div class="interfast-timer-preview">
+                    <p class="interfast-timer-text" id="interfastTimerPreview">
+                        Fast from dinner tonight, skip a full day, and eat breakfast the day after.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Personal Simulation -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastSimulationTitle">Start Your Fasting Journey</h2>
+            
+            <div class="interfast-user-setup">
+                <div class="interfast-input-group">
+                    <label for="interfastUserName" id="interfastNameLabel">Your Name:</label>
+                    <input type="text" id="interfastUserName" class="interfast-name-input" placeholder="Enter your name" value="Fitri">
+                </div>
+                
+                <div class="interfast-input-group">
+                    <label id="interfastStartTimeLabel">I will start my fast after dinner at:</label>
+                    <div class="interfast-time-picker">
+                        <input type="number" class="interfast-time-input" id="interfastStartHour" min="0" max="23" value="19" onchange="interfastUpdateSimulation()">
+                        <span class="interfast-time-separator">:</span>
+                        <input type="number" class="interfast-time-input" id="interfastStartMinute" min="0" max="59" value="0" onchange="interfastUpdateSimulation()">
+                    </div>
+                </div>
+                
+                <button class="interfast-simulate-btn" onclick="interfastStartSimulation()">
+                    Start My 36-Hour Journey
+                </button>
+            </div>
+            
+            <div class="interfast-simulation-result" id="interfastSimulationResult" style="display: none;">
+                <div class="interfast-result-header">
+                    <h3 id="interfastGreetingText">Hello Fitri! Here's Your 36-Hour Plan</h3>
+                </div>
+                
+                <div class="interfast-timeline">
+                    <div class="interfast-timeline-item fasting">
+                        <div class="interfast-timeline-icon">🌙</div>
+                        <div class="interfast-timeline-content">
+                            <div class="interfast-timeline-title" id="interfastFastingPeriodTitle">Fasting Period</div>
+                            <div class="interfast-timeline-time" id="interfastFastingTimeDisplay">19:00 (Day 1) to 07:00 (Day 3) (36 hours)</div>
+                            <div class="interfast-timeline-desc" id="interfastFastingDesc">
+                                <strong>What to consume:</strong> 
+                                <span class="interfast-allowed">💧 Water</span>
+                                <span class="interfast-allowed">🧂 Electrolytes</span>
+                                <span class="interfast-allowed">☕ Black Coffee</span>
+                                <span class="interfast-not-allowed">🚫 No Food</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interfast-timeline-item eating">
+                        <div class="interfast-timeline-icon">🍽️</div>
+                        <div class="interfast-timeline-content">
+                            <div class="interfast-timeline-title" id="interfastEatingPeriodTitle">Post-Fast Meal</div>
+                            <div class="interfast-timeline-time" id="interfastEatingTimeDisplay">Breakfast at 07:00 on Day 3</div>
+                            <div class="interfast-timeline-desc" id="interfastEatingDesc">
+                                <strong>Strategic eating:</strong>
+                                Gently break your fast. Start with something light before having a larger, balanced meal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interfast-progress-tracker">
+                    <h4 id="interfastProgressTitle">Your Fasting Progress</h4>
+                    <div class="interfast-progress-bar">
+                        <div class="interfast-progress-fill" id="interfastProgressFill"></div>
+                    </div>
+                    <div class="interfast-progress-text" id="interfastProgressText">Not started yet</div>
+                </div>
+                
+                <div class="interfast-action-buttons">
+                    <button class="interfast-secondary-btn" onclick="interfastStartRealFast()" id="interfastStartFastBtn">
+                        Start Fasting Now
+                    </button>
+                    <button class="interfast-secondary-btn" onclick="interfastAddToCalendar()" id="interfastCalendarBtn">
+                        Add to Calendar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Explanation & Visual -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastExplanationTitle">What is a 36-Hour Fast?</h2>
+            <p id="interfastPlanDescription">
+                The 36-hour fast, or "Monk Fast," is an advanced protocol involving not eating for an entire day. For example, you eat dinner Monday, fast through all of Tuesday, and eat your next meal on Wednesday morning. This prolonged fast significantly boosts autophagy (cellular cleanup), enhances insulin sensitivity, and can provide a powerful metabolic reset. It is typically done no more than once a week.
+            </p>
+            
+            <div class="interfast-infographic">
+                <div class="interfast-fasting-period" id="interfastFastingLabel">36h FAST</div>
+                <div class="interfast-eating-period" id="interfastEatingLabel">MEAL</div>
+            </div>
+            <div class="interfast-time-labels">
+                <span id="interfastFastingTime">Dinner (Day 1) to Breakfast (Day 3)</span>
+                <span id="interfastEatingTime">Refuel</span>
+            </div>
+        </div>
+
+        <!-- Section 4: Schedule Setup -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastScheduleTitle">Set Your Schedule</h2>
+            <p id="interfastScheduleDescription">Choose the time you'll start your fast (after your last meal):</p>
+            
+            <div class="interfast-time-picker">
+                <input type="number" class="interfast-time-input" id="interfastMealHour" min="0" max="23" value="19" onchange="interfastUpdateSchedule()">
+                <span class="interfast-time-separator">:</span>
+                <input type="number" class="interfast-time-input" id="interfastMealMinute" min="0" max="59" value="0" onchange="interfastUpdateSchedule()">
+            </div>
+            
+            <div class="interfast-schedule-preview">
+                <div class="interfast-schedule-item">
+                    <span class="interfast-schedule-icon">⏰</span>
+                    <span id="interfastScheduleText">✅ <strong>Your Schedule:</strong> Fast from 19:00 (Day 1) until 07:00 (Day 3).</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Tips & Guide -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastTipsTitle">Success Guide for 36-Hour Fasts</h2>
+            <div class="interfast-tips-grid">
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🧂</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip1Title">Prioritize Electrolytes</div>
+                        <div class="interfast-tip-desc" id="interfastTip1Desc">This is crucial for long fasts. Supplement with sodium, potassium, and magnesium to prevent headaches and fatigue.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🗓️</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip2Title">Plan Your Fasting Day</div>
+                        <div class="interfast-tip-desc" id="interfastTip2Desc">Choose a day that is busy but not overly stressful. Avoid social events centered around food.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🥣</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip3Title">Break Fast Gently</div>
+                        <div class="interfast-tip-desc" id="interfastTip3Desc">Your digestive system has been resting. Start with bone broth or a small portion of soft-cooked protein before a larger meal.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">✨</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip4Title">Deep Autophagy Benefits</div>
+                        <div class="interfast-tip-desc" id="interfastTip4Desc">Fasts over 24 hours are where the magic of cellular cleanup (autophagy) really ramps up. It's a full system reset!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Food Inspiration -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastFoodTitle">Breaking Your 36-Hour Fast</h2>
+            <div class="interfast-food-grid">
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🍵</div>
+                    <div class="interfast-food-type" id="interfastFood1Type">Step 1: Gentle Start</div>
+                    <div class="interfast-food-desc" id="interfastFood1Desc">Warm bone broth</div>
+                </div>
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🥚</div>
+                    <div class="interfast-food-type" id="interfastFood2Type">Step 2: Light Protein</div>
+                    <div class="interfast-food-desc" id="interfastFood2Desc">Soft-boiled egg</div>
+                </div>
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🥗</div>
+                    <div class="interfast-food-type" id="interfastFood3Type">Step 3: Main Meal</div>
+                    <div class="interfast-food-desc" id="interfastFood3Desc">A full balanced meal</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Final Action Button -->
+        <div class="interfast-section">
+            <button class="interfast-action-btn" onclick="interfastStartPlan()">
+                Start 36-Hour Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <nav class="interfast-bottom-nav">
+        <a href="index.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">🏠</div>
+            <div class="interfast-nav-label" data-en="Home" data-id="Beranda">Home</div>
+        </a>
+        <a href="panduan.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📚</div>
+            <div class="interfast-nav-label" data-en="Guide" data-id="Panduan">Guide</div>
+        </a>
+        <a href="artikel.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📖</div>
+            <div class="interfast-nav-label" data-en="Articles" data-id="Artikel">Articles</div>
+        </a>
+        <a href="catatan.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📝</div>
+            <div class="interfast-nav-label" data-en="History" data-id="Riwayat">History</div>
+        </a>
+    </nav>
+
+    <script>
+        // INTERFAST JavaScript - 36-Hour Plan
+        const interfastTranslations = {
+            en: {
+                planTitle: "36-Hour Fast",
+                planSubtitle: "The Monk Fast",
+                mainActionBtn: "Start This Plan",
+                timerPreview: "Fast from dinner tonight, skip a full day, and eat breakfast the day after.",
+                simulationTitle: "Start Your Fasting Journey",
+                nameLabel: "Your Name:",
+                startTimeLabel: "I will start my fast after dinner at:",
+                greetingText: "Hello {name}! Here's Your 36-Hour Plan",
+                fastingPeriodTitle: "Fasting Period",
+                eatingPeriodTitle: "Post-Fast Meal",
+                fastingDesc: "<strong>What to consume:</strong> <span class='interfast-allowed'>💧 Water</span><span class='interfast-allowed'>🧂 Electrolytes</span><span class='interfast-allowed'>☕ Black Coffee</span><span class='interfast-not-allowed'>🚫 No Food</span>",
+                eatingDesc: "<strong>Strategic eating:</strong> Gently break your fast. Start with something light before having a larger, balanced meal.",
+                progressTitle: "Your Fasting Progress",
+                startFastBtn: "Start Fasting Now",
+                calendarBtn: "Add to Calendar",
+                explanationTitle: "What is a 36-Hour Fast?",
+                planDescription: "The 36-hour fast, or \"Monk Fast,\" is an advanced protocol involving not eating for an entire day. For example, you eat dinner Monday, fast through all of Tuesday, and eat your next meal on Wednesday morning. This prolonged fast significantly boosts autophagy (cellular cleanup), enhances insulin sensitivity, and can provide a powerful metabolic reset. It is typically done no more than once a week.",
+                fastingLabel: "36h FAST",
+                eatingLabel: "MEAL",
+                fastingTime: "Dinner (Day 1) to Breakfast (Day 3)",
+                eatingTime: "Refuel",
+                scheduleTitle: "Set Your Schedule",
+                scheduleDescription: "Choose the time you'll start your fast (after your last meal):",
+                scheduleText: "✅ <strong>Your Schedule:</strong> Fast from {startTime} (Day 1) until {endTime} (Day 3).",
+                tipsTitle: "Success Guide for 36-Hour Fasts",
+                tip1Title: "Prioritize Electrolytes",
+                tip1Desc: "This is crucial for long fasts. Supplement with sodium, potassium, and magnesium to prevent headaches and fatigue.",
+                tip2Title: "Plan Your Fasting Day",
+                tip2Desc: "Choose a day that is busy but not overly stressful. Avoid social events centered around food.",
+                tip3Title: "Break Fast Gently",
+                tip3Desc: "Your digestive system has been resting. Start with bone broth or a small portion of soft-cooked protein before a larger meal.",
+                tip4Title: "Deep Autophagy Benefits",
+                tip4Desc: "Fasts over 24 hours are where the magic of cellular cleanup (autophagy) really ramps up. It's a full system reset!",
+                foodTitle: "Breaking Your 36-Hour Fast",
+                food1Type: "Step 1: Gentle Start",
+                food1Desc: "Warm bone broth",
+                food2Type: "Step 2: Light Protein",
+                food2Desc: "Soft-boiled egg",
+                food3Type: "Step 3: Main Meal",
+                food3Desc: "A full balanced meal"
+            },
+            id: {
+                planTitle: "Puasa 36 Jam",
+                planSubtitle: "Puasa Biksu (Monk Fast)",
+                mainActionBtn: "Jalankan Plan Ini",
+                timerPreview: "Puasa dari makan malam ini, lewati satu hari penuh, dan sarapan keesokan harinya.",
+                simulationTitle: "Mulai Perjalanan Puasa Anda",
+                nameLabel: "Nama Anda:",
+                startTimeLabel: "Saya akan mulai puasa setelah makan malam pukul:",
+                greetingText: "Halo {name}! Ini Plan Puasa 36 Jam Anda",
+                fastingPeriodTitle: "Periode Puasa",
+                eatingPeriodTitle: "Makan Setelah Puasa",
+                fastingDesc: "<strong>Yang boleh dikonsumsi:</strong> <span class='interfast-allowed'>💧 Air Putih</span><span class='interfast-allowed'>🧂 Elektrolit</span><span class='interfast-allowed'>☕ Kopi Hitam</span><span class='interfast-not-allowed'>🚫 Tidak Makan</span>",
+                eatingDesc: "<strong>Makan strategis:</strong> Berbukalah dengan lembut. Mulailah dengan sesuatu yang ringan sebelum makan besar yang seimbang.",
+                progressTitle: "Progress Puasa Anda",
+                startFastBtn: "Mulai Puasa Sekarang",
+                calendarBtn: "Tambahkan ke Kalender",
+                explanationTitle: "Apa itu Puasa 36 Jam?",
+                planDescription: "Puasa 36 jam, atau \"Monk Fast,\" adalah protokol lanjutan yang melibatkan tidak makan selama satu hari penuh. Contohnya, Anda makan malam hari Senin, berpuasa sepanjang hari Selasa, dan makan lagi pada Rabu pagi. Puasa panjang ini secara signifikan meningkatkan autofagi (pembersihan sel), sensitivitas insulin, dan dapat memberikan reset metabolisme yang kuat. Biasanya dilakukan tidak lebih dari sekali seminggu.",
+                fastingLabel: "36j PUASA",
+                eatingLabel: "MAKAN",
+                fastingTime: "Makan Malam (Hari 1) ke Sarapan (Hari 3)",
+                eatingTime: "Isi Ulang",
+                scheduleTitle: "Atur Jadwal Anda",
+                scheduleDescription: "Pilih waktu Anda memulai puasa (setelah makan terakhir):",
+                scheduleText: "✅ <strong>Jadwal Anda:</strong> Puasa dari pukul {startTime} (Hari 1) hingga {endTime} (Hari 3).",
+                tipsTitle: "Panduan Sukses Puasa 36 Jam",
+                tip1Title: "Prioritaskan Elektrolit",
+                tip1Desc: "Ini sangat penting untuk puasa panjang. Suplemen dengan natrium, kalium, dan magnesium untuk mencegah sakit kepala dan kelelahan.",
+                tip2Title: "Rencanakan Hari Puasa Anda",
+                tip2Desc: "Pilih hari yang sibuk tetapi tidak terlalu membuat stres. Hindari acara sosial yang berpusat pada makanan.",
+                tip3Title: "Berbuka dengan Lembut",
+                tip3Desc: "Sistem pencernaan Anda telah beristirahat. Mulailah dengan kaldu tulang atau porsi kecil protein yang dimasak lembut sebelum makan besar.",
+                tip4Title: "Manfaat Autofagi Mendalam",
+                tip4Desc: "Puasa lebih dari 24 jam adalah saat keajaiban pembersihan sel (autofagi) benar-benar meningkat. Ini adalah reset sistem total!",
+                foodTitle: "Berbuka Puasa 36 Jam Anda",
+                food1Type: "Langkah 1: Mulai Lembut",
+                food1Desc: "Kaldu tulang hangat",
+                food2Type: "Langkah 2: Protein Ringan",
+                food2Desc: "Telur rebus setengah matang",
+                food3Type: "Langkah 3: Makanan Utama",
+                food3Desc: "Makanan lengkap seimbang"
+            }
+        };
+
+        let interfastCurrentLang = 'en';
+
+        // Menu Functions
+        function interfastToggleMenu() {
+            const menu = document.getElementById('interfastDropdownMenu');
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('interfastDropdownMenu');
+            const button = document.querySelector('.interfast-hamburger-btn');
+            
+            if (menu && button && !button.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Language Functions
+        function interfastChangeLanguage(lang) {
+            interfastCurrentLang = lang;
+            
+            document.querySelectorAll('.interfast-lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            Object.keys(interfastTranslations[lang]).forEach(key => {
+                const element = document.getElementById(`interfast${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                if (element) {
+                    if (key.includes('scheduleText') || key.includes('timerPreview')) {
+                        interfastUpdateSchedule();
+                    } else if (key === 'greetingText') {
+                        const userName = document.getElementById('interfastUserName').value || 'Fitri';
+                        element.textContent = interfastTranslations[lang][key].replace('{name}', userName);
+                    } else if (key === 'fastingDesc' || key === 'eatingDesc') {
+                        element.innerHTML = interfastTranslations[lang][key];
+                    } else {
+                        element.textContent = interfastTranslations[lang][key];
+                    }
+                }
+            });
+
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            const simulationResult = document.getElementById('interfastSimulationResult');
+            if (simulationResult.style.display !== 'none') {
+                interfastUpdateSimulation();
+            }
+
+            document.getElementById('interfastDropdownMenu').classList.remove('show');
+        }
+
+        document.querySelectorAll('.interfast-lang-option').forEach(option => {
+            option.addEventListener('click', function() {
+                interfastChangeLanguage(this.dataset.lang);
+            });
+        });
+
+        const formatTime = (hour, minute) => `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+
+        // Schedule Functions - 36-Hour specific
+        function interfastUpdateSchedule() {
+            const startHour = parseInt(document.getElementById('interfastMealHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastMealMinute').value) || 0;
+            const endHour = (startHour + 12) % 24; // 36 hours = 24 + 12
+
+            const startTime = formatTime(startHour, startMinute);
+            const endTime = formatTime(endHour, startMinute);
+            
+            const previewText = interfastTranslations[interfastCurrentLang].timerPreview;
+            document.getElementById('interfastTimerPreview').textContent = previewText;
+
+            const scheduleTemplate = interfastTranslations[interfastCurrentLang].scheduleText;
+            document.getElementById('interfastScheduleText').innerHTML = `✅ <strong>${interfastTranslations[interfastCurrentLang].scheduleTitle.replace('Set ', '')}:</strong> ${scheduleTemplate.replace('{startTime}', startTime).replace('{endTime}', endTime)}`;
+
+            document.getElementById('interfastFastingTime').textContent = interfastTranslations[interfastCurrentLang].fastingTime;
+            document.getElementById('interfastEatingTime').textContent = interfastTranslations[interfastCurrentLang].eatingTime;
+        }
+
+        // Simulation Functions - 36-Hour specific
+        function interfastUpdateSimulation() {
+            const userName = document.getElementById('interfastUserName').value || 'Fitri';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            const endHour = (startHour + 12) % 24;
+
+            const startTime = formatTime(startHour, startMinute);
+            const endTime = formatTime(endHour, startMinute);
+            
+            const simulationResult = document.getElementById('interfastSimulationResult');
+            if (simulationResult.style.display !== 'none') {
+                interfastUpdateSimulationDisplay(userName, startTime, endTime);
+            }
+        }
+
+        function interfastStartSimulation() {
+            const userName = document.getElementById('interfastUserName').value || 'Fitri';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            const endHour = (startHour + 12) % 24;
+
+            const startTime = formatTime(startHour, startMinute);
+            const endTime = formatTime(endHour, startMinute);
+            
+            interfastUpdateSimulationDisplay(userName, startTime, endTime);
+            
+            document.getElementById('interfastSimulationResult').style.display = 'block';
+            document.getElementById('interfastSimulationResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function interfastUpdateSimulationDisplay(userName, startTime, endTime) {
+            const greetingText = interfastTranslations[interfastCurrentLang].greetingText.replace('{name}', userName);
+            
+            const fastDisplay = interfastCurrentLang === 'en'
+                ? `${startTime} (Day 1) to ${endTime} (Day 3) (36 hours)`
+                : `${startTime} (Hari 1) sampai ${endTime} (Hari 3) (36 jam)`;
+
+            const eatDisplay = interfastCurrentLang === 'en'
+                ? `Breakfast at ${endTime} on Day 3`
+                : `Sarapan pukul ${endTime} pada Hari 3`;
+
+            document.getElementById('interfastGreetingText').textContent = greetingText;
+            document.getElementById('interfastFastingTimeDisplay').textContent = fastDisplay;
+            document.getElementById('interfastEatingTimeDisplay').textContent = eatDisplay;
+            
+            interfastUpdateProgress(10);
+        }
+
+        function interfastUpdateProgress(percentage) {
+            const progressFill = document.getElementById('interfastProgressFill');
+            const progressText = document.getElementById('interfastProgressText');
+            
+            progressFill.style.width = `${percentage}%`;
+            
+            if (interfastCurrentLang === 'en') {
+                progressText.textContent = `${percentage}% Complete - Fasting in progress`;
+            } else {
+                progressText.textContent = `${percentage}% Selesai - Puasa berlangsung`;
+            }
+        }
+
+        function interfastStartRealFast() {
+            const userName = document.getElementById('interfastUserName').value || 'Fitri';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            const endHour = (startHour + 12) % 24;
+            
+            const startTime = formatTime(startHour, startMinute);
+            const endTime = formatTime(endHour, startMinute);
+            
+            const message = interfastCurrentLang === 'en'
+                ? `🎉 Excellent ${userName}! Your 36-hour fast has started! \n\nYou will have your next meal on the day after tomorrow at ${endTime}.\n\n💧 Remember electrolytes and hydration!`
+                : `🎉 Luar biasa ${userName}! Puasa 36 jam Anda telah dimulai!\n\nAnda akan makan lagi lusa pukul ${endTime}.\n\n💧 Ingat elektrolit dan hidrasi!`;
+            
+            alert(message);
+            localStorage.setItem('interfastCurrentUser', userName);
+            localStorage.setItem('interfastFastingPlan', '36-Hour');
+            interfastUpdateProgress(5);
+        }
+
+        function interfastAddToCalendar() {
+            const userName = document.getElementById('interfastUserName').value || 'Fitri';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            const endHour = (startHour + 12) % 24;
+            const endTime = formatTime(endHour, startMinute);
+            
+            const message = interfastCurrentLang === 'en'
+                ? `📅 Added to your calendar!\n\nYour 36-hour fast schedule has been saved. You'll get a reminder for your break-fast meal at ${endTime} on the day after tomorrow.\n\nStay strong ${userName}! 💪`
+                : `📅 Ditambahkan ke kalender Anda!\n\nJadwal puasa 36 jam Anda telah disimpan. Anda akan dapat pengingat untuk berbuka puasa pada pukul ${endTime} lusa.\n\nTetap semangat ${userName}! 💪`;
+            
+            alert(message);
+        }
+
+        // Plan Functions
+        function interfastStartPlan() {
+            const startHour = parseInt(document.getElementById('interfastMealHour').value) || 19;
+            const startMinute = parseInt(document.getElementById('interfastMealMinute').value) || 0;
+            const endHour = (startHour + 12) % 24;
+            const endTime = formatTime(endHour, startMinute);
+
+            const message = interfastCurrentLang === 'en'
+                ? `Starting 36-hour plan. Your next meal will be at ${endTime} on the day after tomorrow.`
+                : `Memulai plan puasa 36 jam. Waktu makan Anda berikutnya adalah pukul ${endTime} lusa.`;
+            
+            alert(message);
+            localStorage.setItem('interfastCurrentPlan', '36-Hour');
+            localStorage.setItem('interfastMealTime', `${startHour}:${startMinute}`);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            interfastUpdateSchedule();
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const navItems = document.querySelectorAll('.interfast-nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => console.log('INTERFAST SW registered: ', registration))
+                .catch(registrationError => console.log('INTERFAST SW registration failed: ', registrationError));
+        }
+    </script>
+</body>
+</html>
