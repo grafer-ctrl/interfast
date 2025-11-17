@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20:4 Plan - INTERFAST</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="20:4 Intermittent Fasting Plan - 20 hours fasting, 4 hours eating window">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        /* INTERFAST CSS - All in One */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 20px 80px 20px;
+        }
+
+        /* Header */
+        .interfast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .interfast-back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .interfast-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Hamburger Menu */
+        .interfast-menu-container {
+            position: relative;
+        }
+
+        .interfast-hamburger-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .interfast-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .interfast-dropdown-menu.show {
+            display: block;
+        }
+
+        .interfast-lang-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .interfast-lang-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .interfast-lang-option.active {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .interfast-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .interfast-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Section 1: Header & Timer */
+        .interfast-plan-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .interfast-plan-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .interfast-plan-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .interfast-action-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-action-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .interfast-timer-preview {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .interfast-timer-text {
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        /* Section 2: Personal Simulation */
+        .interfast-user-setup {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .interfast-input-group {
+            margin-bottom: 20px;
+        }
+
+        .interfast-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .interfast-name-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .interfast-name-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .interfast-simulate-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-simulate-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .interfast-simulation-result {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            animation: interfastSlideDown 0.5s ease;
+        }
+
+        @keyframes interfastSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .interfast-result-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .interfast-result-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .interfast-timeline {
+            padding: 20px;
+        }
+
+        .interfast-timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .interfast-timeline-item.fasting {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .interfast-timeline-item.eating {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+
+        .interfast-timeline-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .interfast-timeline-content {
+            flex: 1;
+        }
+
+        .interfast-timeline-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .interfast-timeline-time {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .interfast-timeline-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .interfast-allowed {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            margin: 2px 4px 2px 0;
+            font-size: 0.8rem;
+        }
+
+        .interfast-not-allowed {
+            display: inline-block;
+            background: rgba(244, 67, 54, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            margin: 2px 4px 2px 0;
+            font-size: 0.8rem;
+        }
+
+        .interfast-progress-tracker {
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            margin: 0 20px 20px;
+            border-radius: 12px;
+        }
+
+        .interfast-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .interfast-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .interfast-progress-text {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .interfast-action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+
+        .interfast-secondary-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interfast-secondary-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        /* Section 3: Explanation & Visual */
+        .interfast-infographic {
+            display: flex;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .interfast-fasting-period {
+            flex: 5; /* 20 parts */
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .interfast-eating-period {
+            flex: 1; /* 4 parts */
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .interfast-time-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Section 4: Schedule Setup */
+        .interfast-time-picker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .interfast-time-input {
+            width: 80px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .interfast-time-separator {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .interfast-schedule-preview {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .interfast-schedule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .interfast-schedule-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .interfast-schedule-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Section 5: Tips */
+        .interfast-tips-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interfast-tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+        }
+
+        .interfast-tip-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .interfast-tip-content {
+            flex: 1;
+        }
+
+        .interfast-tip-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .interfast-tip-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Section 6: Food Inspiration */
+        .interfast-food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interfast-food-card {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .interfast-food-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .interfast-food-emoji {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .interfast-food-type {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .interfast-food-desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Bottom Navigation */
+        .interfast-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+
+        .interfast-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .interfast-nav-item.active {
+            color: #667eea;
+        }
+
+        .interfast-nav-item:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .interfast-nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .interfast-nav-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Section Titles */
+        .interfast-section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .interfast-container {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            
+            .interfast-section {
+                padding: 20px;
+            }
+            
+            .interfast-plan-title {
+                font-size: 2rem;
+            }
+            
+            .interfast-food-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .interfast-action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .interfast-plan-title {
+                font-size: 1.8rem;
+            }
+            
+            .interfast-time-input {
+                width: 70px;
+                padding: 10px;
+            }
+            
+            .interfast-food-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .interfast-timeline-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .interfast-nav-icon {
+                font-size: 1.2rem;
+            }
+
+            .interfast-nav-label {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="interfast-container">
+        <!-- Header dengan Back Button & Hamburger Menu -->
+        <div class="interfast-header">
+            <a href="index.html" class="interfast-back-btn">← Back</a>
+            <div class="interfast-logo">
+                <h1>⚡ INTERFAST</h1>
+            </div>
+            <div class="interfast-menu-container">
+                <button class="interfast-hamburger-btn" onclick="interfastToggleMenu()">☰</button>
+                <div class="interfast-dropdown-menu" id="interfastDropdownMenu">
+                    <div class="interfast-lang-option active" data-lang="en">
+                        <span>🇺🇸 English</span>
+                    </div>
+                    <div class="interfast-lang-option" data-lang="id">
+                        <span>🇮🇩 Indonesia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Header & Timer -->
+        <div class="interfast-section">
+            <div class="interfast-plan-header">
+                <h1 class="interfast-plan-title" id="interfastPlanTitle">20:4</h1>
+                <p class="interfast-plan-subtitle" id="interfastPlanSubtitle">20 Hours Fast • 4 Hours Eat</p>
+                <button class="interfast-action-btn" id="interfastMainActionBtn" onclick="interfastStartPlan()">
+                    Start This Plan
+                </button>
+                <div class="interfast-timer-preview">
+                    <p class="interfast-timer-text" id="interfastTimerPreview">
+                        Your fast will start at 18:00 and end at 14:00 tomorrow
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Personal Simulation -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastSimulationTitle">Start Your Fasting Journey</h2>
+            
+            <div class="interfast-user-setup">
+                <div class="interfast-input-group">
+                    <label for="interfastUserName" id="interfastNameLabel">Your Name:</label>
+                    <input type="text" id="interfastUserName" class="interfast-name-input" placeholder="Enter your name" value="Citra">
+                </div>
+                
+                <div class="interfast-input-group">
+                    <label id="interfastStartTimeLabel">Start Fasting At:</label>
+                    <div class="interfast-time-picker">
+                        <input type="number" class="interfast-time-input" id="interfastStartHour" min="0" max="23" value="18" onchange="interfastUpdateSimulation()">
+                        <span class="interfast-time-separator">:</span>
+                        <input type="number" class="interfast-time-input" id="interfastStartMinute" min="0" max="59" value="0" onchange="interfastUpdateSimulation()">
+                    </div>
+                </div>
+                
+                <button class="interfast-simulate-btn" onclick="interfastStartSimulation()">
+                    Start My 20:4 Journey
+                </button>
+            </div>
+            
+            <div class="interfast-simulation-result" id="interfastSimulationResult" style="display: none;">
+                <div class="interfast-result-header">
+                    <h3 id="interfastGreetingText">Hello Citra! Here's Your 20:4 Plan</h3>
+                </div>
+                
+                <div class="interfast-timeline">
+                    <div class="interfast-timeline-item fasting">
+                        <div class="interfast-timeline-icon">🌙</div>
+                        <div class="interfast-timeline-content">
+                            <div class="interfast-timeline-title" id="interfastFastingPeriodTitle">Fasting Period</div>
+                            <div class="interfast-timeline-time" id="interfastFastingTimeDisplay">18:00 - 14:00 (20 hours)</div>
+                            <div class="interfast-timeline-desc" id="interfastFastingDesc">
+                                <strong>What to consume:</strong> 
+                                <span class="interfast-allowed">💧 Water</span>
+                                <span class="interfast-allowed">☕ Black Coffee</span>
+                                <span class="interfast-allowed">🍵 Tea (no sugar)</span>
+                                <span class="interfast-not-allowed">🚫 No Food</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interfast-timeline-item eating">
+                        <div class="interfast-timeline-icon">🍽️</div>
+                        <div class="interfast-timeline-content">
+                            <div class="interfast-timeline-title" id="interfastEatingPeriodTitle">Eating Window</div>
+                            <div class="interfast-timeline-time" id="interfastEatingTimeDisplay">14:00 - 18:00 (4 hours)</div>
+                            <div class="interfast-timeline-desc" id="interfastEatingDesc">
+                                <strong>Strategic eating:</strong>
+                                Known as the Warrior Diet. A tight window for one main feast, maximizing metabolic benefits.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interfast-progress-tracker">
+                    <h4 id="interfastProgressTitle">Your Daily Progress</h4>
+                    <div class="interfast-progress-bar">
+                        <div class="interfast-progress-fill" id="interfastProgressFill"></div>
+                    </div>
+                    <div class="interfast-progress-text" id="interfastProgressText">Not started yet</div>
+                </div>
+                
+                <div class="interfast-action-buttons">
+                    <button class="interfast-secondary-btn" onclick="interfastStartRealFast()" id="interfastStartFastBtn">
+                        Start Fasting Now
+                    </button>
+                    <button class="interfast-secondary-btn" onclick="interfastAddToCalendar()" id="interfastCalendarBtn">
+                        Add to Calendar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Explanation & Visual -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastExplanationTitle">What is 20:4? (The Warrior Diet)</h2>
+            <p id="interfastPlanDescription">
+                The 20:4 method, also known as The Warrior Diet, is a challenging and advanced form of intermittent fasting. It involves a 20-hour fast followed by a 4-hour eating window. This protocol is designed to maximize the body's time in a fasted state, potentially leading to significant benefits in fat burning, autophagy, and hormone regulation. It is recommended only for experienced fasters.
+            </p>
+            
+            <div class="interfast-infographic">
+                <div class="interfast-fasting-period" id="interfastFastingLabel">20h FAST</div>
+                <div class="interfast-eating-period" id="interfastEatingLabel">4h EAT</div>
+            </div>
+            <div class="interfast-time-labels">
+                <span id="interfastFastingTime">18:00 - 14:00</span>
+                <span id="interfastEatingTime">14:00 - 18:00</span>
+            </div>
+        </div>
+
+        <!-- Section 4: Schedule Setup -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastScheduleTitle">Set Your Schedule</h2>
+            <p id="interfastScheduleDescription">Set your first meal time:</p>
+            
+            <div class="interfast-time-picker">
+                <input type="number" class="interfast-time-input" id="interfastMealHour" min="0" max="23" value="14" onchange="interfastUpdateSchedule()">
+                <span class="interfast-time-separator">:</span>
+                <input type="number" class="interfast-time-input" id="interfastMealMinute" min="0" max="59" value="0" onchange="interfastUpdateSchedule()">
+            </div>
+            
+            <div class="interfast-schedule-preview">
+                <div class="interfast-schedule-item">
+                    <span class="interfast-schedule-icon">⏰</span>
+                    <span id="interfastScheduleText">✅ <strong>Your Schedule:</strong> Fast: 18:00 - 14:00 | Eat: 14:00 - 18:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Tips & Guide -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastTipsTitle">Success Guide for 20:4</h2>
+            <div class="interfast-tips-grid">
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🍲</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip1Title">The Main Feast</div>
+                        <div class="interfast-tip-desc" id="interfastTip1Desc">The 4-hour window is ideal for one large, satisfying, and highly nutritious meal, sometimes supplemented by a smaller snack.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">✨</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip2Title">Deep Cellular Repair</div>
+                        <div class="interfast-tip-desc" id="interfastTip2Desc">This extended fasting period strongly promotes deep ketosis and autophagy, maximizing cellular renewal and fat burning.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🧂</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip3Title">Electrolyte Management</div>
+                        <div class="interfast-tip-desc" id="interfastTip3Desc">During a 20-hour fast, it's vital to manage electrolytes. Consider adding a pinch of salt to your water to stay balanced.</div>
+                    </div>
+                </div>
+                <div class="interfast-tip-item">
+                    <span class="interfast-tip-icon">🏆</span>
+                    <div class="interfast-tip-content">
+                        <div class="interfast-tip-title" id="interfastTip4Title">Advanced Fasters Only</div>
+                        <div class="interfast-tip-desc" id="interfastTip4Desc">This protocol is challenging and should only be attempted after you are fully comfortable with shorter fasting windows like 18:6.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Food Inspiration -->
+        <div class="interfast-section">
+            <h2 class="interfast-section-title" id="interfastFoodTitle">Meal Ideas for Your 4-Hour Window</h2>
+            <div class="interfast-food-grid">
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🥗</div>
+                    <div class="interfast-food-type" id="interfastFood1Type">Light Opener</div>
+                    <div class="interfast-food-desc" id="interfastFood1Desc">Small salad or broth</div>
+                </div>
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🥘</div>
+                    <div class="interfast-food-type" id="interfastFood2Type">The Main Feast</div>
+                    <div class="interfast-food-desc" id="interfastFood2Desc">Complete, nutrient-dense meal</div>
+                </div>
+                <div class="interfast-food-card">
+                    <div class="interfast-food-emoji">🍓</div>
+                    <div class="interfast-food-type" id="interfastFood3Type">Final Bites</div>
+                    <div class="interfast-food-desc" id="interfastFood3Desc">Yogurt or fruit</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Final Action Button -->
+        <div class="interfast-section">
+            <button class="interfast-action-btn" onclick="interfastStartPlan()">
+                Start 20:4 Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <nav class="interfast-bottom-nav">
+        <a href="index.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">🏠</div>
+            <div class="interfast-nav-label" data-en="Home" data-id="Beranda">Home</div>
+        </a>
+        <a href="panduan.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📚</div>
+            <div class="interfast-nav-label" data-en="Guide" data-id="Panduan">Guide</div>
+        </a>
+        <a href="artikel.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📖</div>
+            <div class="interfast-nav-label" data-en="Articles" data-id="Artikel">Articles</div>
+        </a>
+        <a href="catatan.html" class="interfast-nav-item">
+            <div class="interfast-nav-icon">📝</div>
+            <div class="interfast-nav-label" data-en="History" data-id="Riwayat">History</div>
+        </a>
+    </nav>
+
+    <script>
+        // INTERFAST JavaScript - 20:4 Plan
+        const interfastTranslations = {
+            en: {
+                planTitle: "20:4",
+                planSubtitle: "20 Hours Fast • 4 Hours Eat",
+                mainActionBtn: "Start This Plan",
+                timerPreview: "Your fast will start at 18:00 and end at 14:00 tomorrow",
+                simulationTitle: "Start Your Fasting Journey",
+                nameLabel: "Your Name:",
+                startTimeLabel: "Start Fasting At:",
+                greetingText: "Hello {name}! Here's Your 20:4 Plan",
+                fastingPeriodTitle: "Fasting Period",
+                eatingPeriodTitle: "Eating Window",
+                fastingDesc: "<strong>What to consume:</strong> <span class='interfast-allowed'>💧 Water</span><span class='interfast-allowed'>☕ Black Coffee</span><span class='interfast-allowed'>🍵 Tea (no sugar)</span><span class='interfast-not-allowed'>🚫 No Food</span>",
+                eatingDesc: "<strong>Strategic eating:</strong> Known as the Warrior Diet. A tight window for one main feast, maximizing metabolic benefits.",
+                progressTitle: "Your Daily Progress",
+                startFastBtn: "Start Fasting Now",
+                calendarBtn: "Add to Calendar",
+                explanationTitle: "What is 20:4? (The Warrior Diet)",
+                planDescription: "The 20:4 method, also known as The Warrior Diet, is a challenging and advanced form of intermittent fasting. It involves a 20-hour fast followed by a 4-hour eating window. This protocol is designed to maximize the body's time in a fasted state, potentially leading to significant benefits in fat burning, autophagy, and hormone regulation. It is recommended only for experienced fasters.",
+                fastingLabel: "20h FAST",
+                eatingLabel: "4h EAT",
+                fastingTime: "18:00 - 14:00",
+                eatingTime: "14:00 - 18:00",
+                scheduleTitle: "Set Your Schedule",
+                scheduleDescription: "Set your first meal time:",
+                scheduleText: "✅ <strong>Your Schedule:</strong> Fast: 18:00 - 14:00 | Eat: 14:00 - 18:00",
+                tipsTitle: "Success Guide for 20:4",
+                tip1Title: "The Main Feast",
+                tip1Desc: "The 4-hour window is ideal for one large, satisfying, and highly nutritious meal, sometimes supplemented by a smaller snack.",
+                tip2Title: "Deep Cellular Repair",
+                tip2Desc: "This extended fasting period strongly promotes deep ketosis and autophagy, maximizing cellular renewal and fat burning.",
+                tip3Title: "Electrolyte Management",
+                tip3Desc: "During a 20-hour fast, it's vital to manage electrolytes. Consider adding a pinch of salt to your water to stay balanced.",
+                tip4Title: "Advanced Fasters Only",
+                tip4Desc: "This protocol is challenging and should only be attempted after you are fully comfortable with shorter fasting windows like 18:6.",
+                foodTitle: "Meal Ideas for Your 4-Hour Window",
+                food1Type: "Light Opener",
+                food1Desc: "Small salad or broth",
+                food2Type: "The Main Feast",
+                food2Desc: "Complete, nutrient-dense meal",
+                food3Type: "Final Bites",
+                food3Desc: "Yogurt or fruit"
+            },
+            id: {
+                planTitle: "20:4",
+                planSubtitle: "20 Jam Puasa • 4 Jam Makan",
+                mainActionBtn: "Jalankan Plan Ini",
+                timerPreview: "Puasa Anda akan dimulai pukul 18:00 dan berakhir pukul 14:00 besok",
+                simulationTitle: "Mulai Perjalanan Puasa Anda",
+                nameLabel: "Nama Anda:",
+                startTimeLabel: "Mulai Puasa Pada:",
+                greetingText: "Halo {name}! Ini Plan 20:4 Anda",
+                fastingPeriodTitle: "Periode Puasa",
+                eatingPeriodTitle: "Jendela Makan",
+                fastingDesc: "<strong>Yang boleh dikonsumsi:</strong> <span class='interfast-allowed'>💧 Air Putih</span><span class='interfast-allowed'>☕ Kopi Hitam</span><span class='interfast-allowed'>🍵 Teh (tanpa gula)</span><span class='interfast-not-allowed'>🚫 Tidak Makan</span>",
+                eatingDesc: "<strong>Makan strategis:</strong> Dikenal sebagai Diet Prajurit. Jendela makan sempit untuk satu hidangan utama, memaksimalkan manfaat metabolisme.",
+                progressTitle: "Progress Harian Anda",
+                startFastBtn: "Mulai Puasa Sekarang",
+                calendarBtn: "Tambahkan ke Kalender",
+                explanationTitle: "Apa itu 20:4? (Diet Prajurit)",
+                planDescription: "Metode 20:4, juga dikenal sebagai Diet Prajurit, adalah bentuk puasa intermiten yang menantang dan canggih. Ini melibatkan puasa 20 jam diikuti oleh jendela makan 4 jam. Protokol ini dirancang untuk memaksimalkan waktu tubuh dalam keadaan puasa, yang berpotensi memberikan manfaat signifikan dalam pembakaran lemak, autofagi, dan regulasi hormon. Ini hanya direkomendasikan untuk orang yang sudah berpengalaman berpuasa.",
+                fastingLabel: "20j PUASA",
+                eatingLabel: "4j MAKAN",
+                fastingTime: "18:00 - 14:00",
+                eatingTime: "14:00 - 18:00",
+                scheduleTitle: "Atur Jadwal Anda",
+                scheduleDescription: "Atur waktu makan pertama Anda:",
+                scheduleText: "✅ <strong>Jadwal Anda:</strong> Puasa: 18:00 - 14:00 | Makan: 14:00 - 18:00",
+                tipsTitle: "Panduan Sukses 20:4",
+                tip1Title: "Satu Hidangan Utama",
+                tip1Desc: "Jendela 4 jam sangat ideal untuk satu kali makan besar yang memuaskan dan bergizi tinggi, terkadang ditambah dengan camilan kecil.",
+                tip2Title: "Perbaikan Sel Mendalam",
+                tip2Desc: "Periode puasa yang diperpanjang ini sangat mendorong ketosis dalam dan autofagi, memaksimalkan pembaruan sel dan pembakaran lemak.",
+                tip3Title: "Manajemen Elektrolit",
+                tip3Desc: "Selama puasa 20 jam, sangat penting untuk mengelola elektrolit. Pertimbangkan untuk menambahkan sejumput garam ke dalam air Anda.",
+                tip4Title: "Hanya Untuk yang Berpengalaman",
+                tip4Desc: "Protokol ini menantang dan sebaiknya hanya dicoba setelah Anda benar-benar nyaman dengan jendela puasa yang lebih pendek seperti 18:6.",
+                foodTitle: "Ide Makanan untuk Jendela 4 Jam Anda",
+                food1Type: "Pembuka Ringan",
+                food1Desc: "Salad kecil atau kaldu",
+                food2Type: "Hidangan Utama",
+                food2Desc: "Makanan lengkap padat gizi",
+                food3Type: "Gigitan Terakhir",
+                food3Desc: "Yogurt atau buah"
+            }
+        };
+
+        let interfastCurrentLang = 'en';
+
+        // Menu Functions
+        function interfastToggleMenu() {
+            const menu = document.getElementById('interfastDropdownMenu');
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('interfastDropdownMenu');
+            const button = document.querySelector('.interfast-hamburger-btn');
+            
+            if (menu && button && !button.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Language Functions
+        function interfastChangeLanguage(lang) {
+            interfastCurrentLang = lang;
+            
+            // Update active state
+            document.querySelectorAll('.interfast-lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Update all translatable elements
+            Object.keys(interfastTranslations[lang]).forEach(key => {
+                const element = document.getElementById(`interfast${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                if (element) {
+                    if (key === 'scheduleText' || key === 'timerPreview') {
+                        interfastUpdateSchedule();
+                    } else if (key === 'greetingText') {
+                        const userName = document.getElementById('interfastUserName').value || 'Citra';
+                        element.textContent = interfastTranslations[lang][key].replace('{name}', userName);
+                    } else if (key === 'fastingDesc' || key === 'eatingDesc') {
+                        element.innerHTML = interfastTranslations[lang][key];
+                    } else {
+                        element.textContent = interfastTranslations[lang][key];
+                    }
+                }
+            });
+
+            // Update bottom nav labels
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            // Update simulation jika sedang aktif
+            const simulationResult = document.getElementById('interfastSimulationResult');
+            if (simulationResult.style.display !== 'none') {
+                interfastUpdateSimulation();
+            }
+
+            // Close dropdown
+            document.getElementById('interfastDropdownMenu').classList.remove('show');
+        }
+
+        // Event listeners untuk bahasa
+        document.querySelectorAll('.interfast-lang-option').forEach(option => {
+            option.addEventListener('click', function() {
+                interfastChangeLanguage(this.dataset.lang);
+            });
+        });
+
+        // Schedule Functions - 20:4 specific
+        function interfastUpdateSchedule() {
+            const mealHour = parseInt(document.getElementById('interfastMealHour').value) || 14;
+            const mealMinute = parseInt(document.getElementById('interfastMealMinute').value) || 0;
+            
+            // Calculate fasting start time (20 hours before meal time)
+            let fastingStartHour = mealHour - 20;
+            if (fastingStartHour < 0) fastingStartHour += 24;
+            
+            const fastingEndHour = mealHour;
+            const eatingEndHour = (mealHour + 4) % 24;
+            
+            const formatTime = (hour, minute) => {
+                return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            };
+            
+            const fastingStart = formatTime(fastingStartHour, mealMinute);
+            const fastingEnd = formatTime(fastingEndHour, mealMinute);
+            const eatingEnd = formatTime(eatingEndHour, mealMinute);
+            
+            document.getElementById('interfastTimerPreview').textContent = 
+                interfastCurrentLang === 'en' 
+                    ? `Your fast will start at ${fastingStart} and end at ${fastingEnd} tomorrow`
+                    : `Puasa Anda akan dimulai pukul ${fastingStart} dan berakhir pukul ${fastingEnd} besok`;
+            
+            document.getElementById('interfastScheduleText').innerHTML = 
+                interfastCurrentLang === 'en'
+                    ? `✅ <strong>Your Schedule:</strong> Fast: ${fastingStart} - ${fastingEnd} | Eat: ${fastingEnd} - ${eatingEnd}`
+                    : `✅ <strong>Jadwal Anda:</strong> Puasa: ${fastingStart} - ${fastingEnd} | Makan: ${fastingEnd} - ${eatingEnd}`;
+            
+            document.getElementById('interfastFastingTime').textContent = `${fastingStart} - ${fastingEnd}`;
+            document.getElementById('interfastEatingTime').textContent = `${fastingEnd} - ${eatingEnd}`;
+        }
+
+        // Simulation Functions - 20:4 specific
+        function interfastUpdateSimulation() {
+            const userName = document.getElementById('interfastUserName').value || 'Citra';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 18;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            
+            const eatingStartHour = (startHour + 20) % 24;
+            const eatingEndHour = (eatingStartHour + 4) % 24;
+            
+            const formatTime = (hour, minute) => {
+                return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            };
+            
+            const fastingStart = formatTime(startHour, startMinute);
+            const eatingStart = formatTime(eatingStartHour, startMinute);
+            const eatingEnd = formatTime(eatingEndHour, startMinute);
+            
+            const simulationResult = document.getElementById('interfastSimulationResult');
+            if (simulationResult.style.display !== 'none') {
+                interfastUpdateSimulationDisplay(userName, fastingStart, eatingStart, eatingEnd);
+            }
+        }
+
+        function interfastStartSimulation() {
+            const userName = document.getElementById('interfastUserName').value || 'Citra';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 18;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            
+            const eatingStartHour = (startHour + 20) % 24;
+            const eatingEndHour = (eatingStartHour + 4) % 24;
+            
+            const formatTime = (hour, minute) => {
+                return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            };
+            
+            const fastingStart = formatTime(startHour, startMinute);
+            const eatingStart = formatTime(eatingStartHour, startMinute);
+            const eatingEnd = formatTime(eatingEndHour, startMinute);
+            
+            interfastUpdateSimulationDisplay(userName, fastingStart, eatingStart, eatingEnd);
+            
+            document.getElementById('interfastSimulationResult').style.display = 'block';
+            
+            document.getElementById('interfastSimulationResult').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function interfastUpdateSimulationDisplay(userName, fastingStart, eatingStart, eatingEnd) {
+            const greetingText = interfastCurrentLang === 'en' 
+                ? `Hello ${userName}! Here's Your 20:4 Plan`
+                : `Halo ${userName}! Ini Plan 20:4 Anda`;
+            
+            document.getElementById('interfastGreetingText').textContent = greetingText;
+            document.getElementById('interfastFastingTimeDisplay').textContent = 
+                `${fastingStart} - ${eatingStart} (20 hours)`;
+            document.getElementById('interfastEatingTimeDisplay').textContent = 
+                `${eatingStart} - ${eatingEnd} (4 hours)`;
+            
+            interfastUpdateProgress(25);
+        }
+
+        function interfastUpdateProgress(percentage) {
+            const progressFill = document.getElementById('interfastProgressFill');
+            const progressText = document.getElementById('interfastProgressText');
+            
+            progressFill.style.width = `${percentage}%`;
+            
+            if (interfastCurrentLang === 'en') {
+                progressText.textContent = `${percentage}% Complete - Fasting in progress`;
+            } else {
+                progressText.textContent = `${percentage}% Selesai - Puasa berlangsung`;
+            }
+        }
+
+        function interfastStartRealFast() {
+            const userName = document.getElementById('interfastUserName').value || 'Citra';
+            const startHour = parseInt(document.getElementById('interfastStartHour').value) || 18;
+            const startMinute = parseInt(document.getElementById('interfastStartMinute').value) || 0;
+            const eatingStartHour = (startHour + 20) % 24;
+            const eatingEndHour = (eatingStartHour + 4) % 24;
+            
+            const message = interfastCurrentLang === 'en'
+                ? `🎉 Excellent ${userName}! Your 20:4 fasting journey has started!\n\n⏰ Fasting: ${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')} - ${eatingStartHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}\n🍽️ Eating: ${eatingStartHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')} - ${eatingEndHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}\n\n💧 Remember to stay hydrated with water, black coffee, or tea!`
+                : `🎉 Luar biasa ${userName}! Perjalanan puasa 20:4 Anda telah dimulai!\n\n⏰ Puasa: ${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')} - ${eatingStartHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}\n🍽️ Makan: ${eatingStartHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')} - ${eatingEndHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}\n\n💧 Ingat untuk tetap terhidrasi dengan air putih, kopi hitam, atau teh!`;
+            
+            alert(message);
+            
+            localStorage.setItem('interfastCurrentUser', userName);
+            localStorage.setItem('interfastFastingStart', `${startHour}:${startMinute.toString().padStart(2, '0')}`);
+            localStorage.setItem('interfastFastingPlan', '20:4');
+            
+            interfastUpdateProgress(5);
+        }
+
+        function interfastAddToCalendar() {
+            const userName = document.getElementById('interfastUserName').value || 'Citra';
+            
+            const message = interfastCurrentLang === 'en'
+                ? `📅 Added to your calendar!\n\nYour 20:4 fasting schedule has been saved. You'll get reminders for:\n• Fasting start time\n• Eating window opening\n• Daily progress updates\n\nStay consistent ${userName}! 💪`
+                : `📅 Ditambahkan ke kalender Anda!\n\nJadwal puasa 20:4 Anda telah disimpan. Anda akan dapat pengingat untuk:\n• Waktu mulai puasa\n• Pembukaan jendela makan\n• Update progress harian\n\nTetap konsisten ${userName}! 💪`;
+            
+            alert(message);
+        }
+
+        // Plan Functions
+        function interfastStartPlan() {
+            const mealHour = parseInt(document.getElementById('interfastMealHour').value) || 14;
+            const mealMinute = parseInt(document.getElementById('interfastMealMinute').value) || 0;
+            
+            const message = interfastCurrentLang === 'en'
+                ? `Starting 20:4 plan with first meal at ${mealHour.toString().padStart(2, '0')}:${mealMinute.toString().padStart(2, '0')}`
+                : `Memulai plan 20:4 dengan makan pertama pukul ${mealHour.toString().padStart(2, '0')}:${mealMinute.toString().padStart(2, '0')}`;
+            
+            alert(message);
+            
+            localStorage.setItem('interfastCurrentPlan', '20:4');
+            localStorage.setItem('interfastMealTime', `${mealHour}:${mealMinute.toString().padStart(2, '0')}`);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            interfastUpdateSchedule();
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const navItems = document.querySelectorAll('.interfast-nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Simple Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('INTERFAST SW registered: ', registration);
+                })
+                .catch(registrationError => {
+                    console.log('INTERFAST SW registration failed: ', registrationError);
+                });
+        }
+    </script>
+</body>
+</html>
