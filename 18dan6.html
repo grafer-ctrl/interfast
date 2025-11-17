@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16:8 Plan - INTERFAST</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="16:8 Intermittent Fasting Plan - 16 hours fasting, 8 hours eating window">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        /* CSS Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 20px 80px 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Hamburger Menu */
+        .menu-container {
+            position: relative;
+        }
+
+        .hamburger-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .lang-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .lang-option.active {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Section 1: Header & Timer */
+        .plan-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .plan-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .plan-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .timer-preview {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .timer-text {
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        /* Section 2: Explanation & Visual */
+        .infographic {
+            display: flex;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .fasting-period {
+            flex: 2;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .eating-period {
+            flex: 1;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .time-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Section 3: Schedule Setup */
+        .time-picker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .time-input {
+            width: 80px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .time-separator {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .schedule-preview {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .schedule-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .schedule-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Section 4: Tips */
+        .tips-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+        }
+
+        .tip-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex: 1;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .tip-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Section 5: Food Inspiration */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .food-card {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .food-emoji {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .food-type {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .food-desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+        }
+
+        .nav-item:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .plan-title {
+                font-size: 2rem;
+            }
+            
+            .food-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .plan-title {
+                font-size: 1.8rem;
+            }
+            
+            .time-input {
+                width: 70px;
+                padding: 10px;
+            }
+            
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header dengan Back Button & Hamburger Menu -->
+        <div class="header">
+            <a href="index.html" class="back-btn">← Back</a>
+            <div class="logo">
+                <h1>⚡ INTERFAST</h1>
+            </div>
+            <div class="menu-container">
+                <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="lang-option active" data-lang="en">
+                        <span>🇺🇸 English</span>
+                    </div>
+                    <div class="lang-option" data-lang="id">
+                        <span>🇮🇩 Indonesia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Header & Timer -->
+        <div class="section">
+            <div class="plan-header">
+                <h1 class="plan-title" id="planTitle">16:8</h1>
+                <p class="plan-subtitle" id="planSubtitle">16 Hours Fast • 8 Hours Eat</p>
+                <button class="action-btn" id="mainActionBtn" onclick="startPlan()">
+                    Start This Plan
+                </button>
+                <div class="timer-preview">
+                    <p class="timer-text" id="timerPreview">
+                        Your fast will start at 20:00 and end at 12:00 tomorrow
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Explanation & Visual -->
+        <div class="section">
+            <h2 class="section-title" id="explanationTitle">What is 16:8?</h2>
+            <p id="planDescription">
+                The 16:8 method is the most popular way to do Intermittent Fasting. You fast for 16 hours and consume all daily calories during an 8-hour eating window.
+            </p>
+            
+            <div class="infographic">
+                <div class="fasting-period" id="fastingLabel">16h FAST</div>
+                <div class="eating-period" id="eatingLabel">8h EAT</div>
+            </div>
+            <div class="time-labels">
+                <span id="fastingTime">20:00 - 12:00</span>
+                <span id="eatingTime">12:00 - 20:00</span>
+            </div>
+        </div>
+
+        <!-- Section 3: Schedule Setup -->
+        <div class="section">
+            <h2 class="section-title" id="scheduleTitle">Set Your Schedule</h2>
+            <p id="scheduleDescription">Set your first meal time:</p>
+            
+            <div class="time-picker">
+                <input type="number" class="time-input" id="mealHour" min="0" max="23" value="12" onchange="updateSchedule()">
+                <span class="time-separator">:</span>
+                <input type="number" class="time-input" id="mealMinute" min="0" max="59" value="0" onchange="updateSchedule()">
+            </div>
+            
+            <div class="schedule-preview">
+                <div class="schedule-item">
+                    <span class="schedule-icon">⏰</span>
+                    <span id="scheduleText">✅ <strong>Your Schedule:</strong> Fast: 20:00 - 12:00 | Eat: 12:00 - 20:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Tips & Guide -->
+        <div class="section">
+            <h2 class="section-title" id="tipsTitle">Success Guide for 16:8</h2>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <span class="tip-icon">💧</span>
+                    <div class="tip-content">
+                        <div class="tip-title" id="tip1Title">Stay Hydrated</div>
+                        <div class="tip-desc" id="tip1Desc">Drink water, black coffee, or tea during fasting period</div>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">🥗</span>
+                    <div class="tip-content">
+                        <div class="tip-title" id="tip2Title">Break Fast Wisely</div>
+                        <div class="tip-desc" id="tip2Desc">Break your fast with nutritious food, not sugary snacks</div>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">📵</span>
+                    <div class="tip-content">
+                        <div class="tip-title" id="tip3Title">Stay Busy</div>
+                        <div class="tip-desc" id="tip3Desc">Keep yourself busy when hunger comes, it usually passes</div>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">😴</span>
+                    <div class="tip-content">
+                        <div class="tip-title" id="tip4Title">Use Sleep Time</div>
+                        <div class="tip-desc" id="tip4Desc">Utilize sleep time as part of your fasting hours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Food Inspiration -->
+        <div class="section">
+            <h2 class="section-title" id="foodTitle">Meal Ideas for Your 8-Hour Window</h2>
+            <div class="food-grid">
+                <div class="food-card">
+                    <div class="food-emoji">🥗</div>
+                    <div class="food-type" id="food1Type">Lunch</div>
+                    <div class="food-desc" id="food1Desc">High-protein salad</div>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🐟</div>
+                    <div class="food-type" id="food2Type">Dinner</div>
+                    <div class="food-desc" id="food2Desc">Fish & Vegetables</div>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🥜</div>
+                    <div class="food-type" id="food3Type">Snack</div>
+                    <div class="food-desc" id="food3Desc">Nuts & Yogurt</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Final Action Button -->
+        <div class="section">
+            <button class="action-btn" onclick="startPlan()">
+                Start 16:8 Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label" data-en="Home" data-id="Beranda">Home</div>
+        </a>
+        <a href="panduan.html" class="nav-item">
+            <div class="nav-icon">📚</div>
+            <div class="nav-label" data-en="Guide" data-id="Panduan">Guide</div>
+        </a>
+        <a href="artikel.html" class="nav-item">
+            <div class="nav-icon">📖</div>
+            <div class="nav-label" data-en="Articles" data-id="Artikel">Articles</div>
+        </a>
+        <a href="catatan.html" class="nav-item">
+            <div class="nav-icon">📝</div>
+            <div class="nav-label" data-en="History" data-id="Riwayat">History</div>
+        </a>
+    </nav>
+
+    <script>
+        // Data terjemahan
+        const translations = {
+            en: {
+                planTitle: "16:8",
+                planSubtitle: "16 Hours Fast • 8 Hours Eat",
+                mainActionBtn: "Start This Plan",
+                timerPreview: "Your fast will start at 20:00 and end at 12:00 tomorrow",
+                explanationTitle: "What is 16:8?",
+                planDescription: "The 16:8 method is the most popular way to do Intermittent Fasting. You fast for 16 hours and consume all daily calories during an 8-hour eating window.",
+                fastingLabel: "16h FAST",
+                eatingLabel: "8h EAT",
+                fastingTime: "20:00 - 12:00",
+                eatingTime: "12:00 - 20:00",
+                scheduleTitle: "Set Your Schedule",
+                scheduleDescription: "Set your first meal time:",
+                scheduleText: "✅ <strong>Your Schedule:</strong> Fast: 20:00 - 12:00 | Eat: 12:00 - 20:00",
+                tipsTitle: "Success Guide for 16:8",
+                tip1Title: "Stay Hydrated",
+                tip1Desc: "Drink water, black coffee, or tea during fasting period",
+                tip2Title: "Break Fast Wisely",
+                tip2Desc: "Break your fast with nutritious food, not sugary snacks",
+                tip3Title: "Stay Busy",
+                tip3Desc: "Keep yourself busy when hunger comes, it usually passes",
+                tip4Title: "Use Sleep Time",
+                tip4Desc: "Utilize sleep time as part of your fasting hours",
+                foodTitle: "Meal Ideas for Your 8-Hour Window",
+                food1Type: "Lunch",
+                food1Desc: "High-protein salad",
+                food2Type: "Dinner",
+                food2Desc: "Fish & Vegetables",
+                food3Type: "Snack",
+                food3Desc: "Nuts & Yogurt"
+            },
+            id: {
+                planTitle: "16:8",
+                planSubtitle: "16 Jam Puasa • 8 Jam Makan",
+                mainActionBtn: "Jalankan Plan Ini",
+                timerPreview: "Puasa Anda akan dimulai pukul 20:00 dan berakhir pukul 12:00 besok",
+                explanationTitle: "Apa itu 16:8?",
+                planDescription: "Metode 16:8 adalah cara paling populer untuk melakukan Intermittent Fasting. Anda berpuasa selama 16 jam dan mengonsumsi semua kalori harian dalam jendela makan 8 jam.",
+                fastingLabel: "16j PUASA",
+                eatingLabel: "8j MAKAN",
+                fastingTime: "20:00 - 12:00",
+                eatingTime: "12:00 - 20:00",
+                scheduleTitle: "Atur Jadwal Anda",
+                scheduleDescription: "Atur waktu makan pertama Anda:",
+                scheduleText: "✅ <strong>Jadwal Anda:</strong> Puasa: 20:00 - 12:00 | Makan: 12:00 - 20:00",
+                tipsTitle: "Panduan Sukses 16:8",
+                tip1Title: "Tetap Terhidrasi",
+                tip1Desc: "Minum air putih, kopi hitam, atau teh selama puasa",
+                tip2Title: "Buka Puasa dengan Bijak",
+                tip2Desc: "Bukalah puasa dengan makanan bernutrisi, bukan makanan manis",
+                tip3Title: "Sibukkan Diri",
+                tip3Desc: "Sibukkan diri Anda saat rasa lapar datang, biasanya akan hilang",
+                tip4Title: "Manfaatkan Waktu Tidur",
+                tip4Desc: "Manfaatkan waktu tidur sebagai bagian dari jam puasa",
+                foodTitle: "Ide Makanan untuk Jendela 8 Jam Anda",
+                food1Type: "Makan Siang",
+                food1Desc: "Salad protein tinggi",
+                food2Type: "Makan Malam",
+                food2Desc: "Ikan & Sayuran",
+                food3Type: "Camilan",
+                food3Desc: "Kacang-kacangan & Yogurt"
+            }
+        };
+
+        let currentLang = 'en';
+
+        // Update schedule based on time input
+        function updateSchedule() {
+            const mealHour = parseInt(document.getElementById('mealHour').value) || 12;
+            const mealMinute = parseInt(document.getElementById('mealMinute').value) || 0;
+            
+            // Calculate fasting start time (8 hours before meal time)
+            let fastingStartHour = mealHour - 8;
+            if (fastingStartHour < 0) fastingStartHour += 24;
+            
+            const fastingEndHour = mealHour;
+            const eatingEndHour = (mealHour + 8) % 24;
+            
+            // Format times
+            const formatTime = (hour, minute) => {
+                return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            };
+            
+            const fastingStart = formatTime(fastingStartHour, mealMinute);
+            const fastingEnd = formatTime(fastingEndHour, mealMinute);
+            const eatingEnd = formatTime(eatingEndHour, mealMinute);
+            
+            // Update preview
+            document.getElementById('timerPreview').textContent = 
+                currentLang === 'en' 
+                    ? `Your fast will start at ${fastingStart} and end at ${fastingEnd} tomorrow`
+                    : `Puasa Anda akan dimulai pukul ${fastingStart} dan berakhir pukul ${fastingEnd} besok`;
+            
+            document.getElementById('scheduleText').innerHTML = 
+                currentLang === 'en'
+                    ? `✅ <strong>Your Schedule:</strong> Fast: ${fastingStart} - ${fastingEnd} | Eat: ${fastingEnd} - ${eatingEnd}`
+                    : `✅ <strong>Jadwal Anda:</strong> Puasa: ${fastingStart} - ${fastingEnd} | Makan: ${fastingEnd} - ${eatingEnd}`;
+            
+            // Update infographic times
+            document.getElementById('fastingTime').textContent = `${fastingStart} - ${fastingEnd}`;
+            document.getElementById('eatingTime').textContent = `${fastingEnd} - ${eatingEnd}`;
+        }
+
+        // Start plan function
+        function startPlan() {
+            const mealHour = parseInt(document.getElementById('mealHour').value) || 12;
+            const mealMinute = parseInt(document.getElementById('mealMinute').value) || 0;
+            
+            const message = currentLang === 'en'
+                ? `Starting 16:8 plan with first meal at ${mealHour.toString().padStart(2, '0')}:${mealMinute.toString().padStart(2, '0')}`
+                : `Memulai plan 16:8 dengan makan pertama pukul ${mealHour.toString().padStart(2, '0')}:${mealMinute.toString().padStart(2, '0')}`;
+            
+            alert(message);
+            // Save to localStorage and redirect to timer page
+            localStorage.setItem('currentPlan', '16:8');
+            localStorage.setItem('mealTime', `${mealHour}:${mealMinute.toString().padStart(2, '0')}`);
+            // window.location.href = 'timer.html';
+        }
+
+        // Language functions
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active state
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Update all translatable elements
+            Object.keys(translations[lang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key === 'scheduleText' || key === 'timerPreview') {
+                        // For elements that contain HTML or dynamic content
+                        updateSchedule(); // This will update these elements
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Update bottom nav labels
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            // Close dropdown
+            document.getElementById('dropdownMenu').classList.remove('show');
+        }
+
+        // Event listeners
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', function() {
+                changeLanguage(this.dataset.lang);
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const button = document.querySelector('.hamburger-btn');
+            
+            if (menu && button && !button.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSchedule();
+            
+            // Set current page as active in nav
+            const currentPage = window.location.pathname.split('/').pop();
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Simple Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        }
+    </script>
+</body>
+</html>
